@@ -51,3 +51,30 @@ window.addEventListener('keydown', (event) => {
 // function as expected. There are many ways to accomplish this task, but you will need
 // to at minimum add listeners to each link and toggle the display of the tab contents.
 // Hint: display: none; hides an element, and display: block; will bring it
+
+// Select all tab links and tab contents
+const tabLinks = document.querySelectorAll('#tabbed-layout ul li a');
+const tabContents = document.querySelectorAll('#tabbed-contents > div');
+
+// Function to switch tabs
+function switchTab(event) {
+    event.preventDefault(); // Prevent default link behavior
+    const targetId = event.target.id.replace('Link', ''); // Extract the target tab's ID
+
+    // Hide all tab contents and remove active styling from links
+    tabContents.forEach(tab => tab.style.display = 'none');
+    tabLinks.forEach(link => link.classList.remove('active'));
+
+    // Show the target tab content and mark the link as active
+    document.getElementById(targetId).style.display = 'block';
+    event.target.classList.add('active');
+}
+
+// Set up event listeners for tab links
+tabLinks.forEach(link => link.addEventListener('click', switchTab));
+
+// Show the first tab by default
+tabLinks[0].classList.add('active'); // Mark first tab as active
+tabContents.forEach((tab, index) => {
+    tab.style.display = index === 0 ? 'block' : 'none'; // Show only the first tab content
+});
